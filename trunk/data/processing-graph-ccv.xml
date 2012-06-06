@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<!DOCTYPE processing-graph SYSTEM "http://actracktive.googlecode.com/svn/trunk/aux/resources/processing-graph.dtd">
+<processing-graph>
+	<node id="camera" type="DC1394Source" name="DC1394 Source">
+		<property name="cameraId">49712223530884286:0</property>
+        <property name="mode">MODE_640x480_MONO8</property>
+        <property name="rate">RATE_60</property>
+	</node>
+	<node id="background" type="BackgroundFilter" name="Background Filter">
+		<property name="enabled">false</property>
+		<connection name="source">camera</connection>
+	</node>
+	<node id="smooth" type="SmoothFilter" name="Smooth Filter">
+		<property name="enabled">true</property>
+		<property name="blurStrength">5</property>
+		<property name="blurMethod">Normalized_Box</property>
+		<connection name="source">background</connection>
+	</node>
+	<node id="highpass" type="HighpassFilter" name="Highpass Filter">
+		<property name="enabled">false</property>
+		<connection name="source">smooth</connection>
+	</node>
+	<node id="amplify" type="AmplifyFilter" name="Amplify Filter">
+		<property name="enabled">false</property>
+		<connection name="source">highpass</connection>
+	</node>
+	<node id="threshold" type="ThresholdFilter" name="Threshold Filter">
+		<property name="enabled">true</property>
+		<connection name="source">amplify</connection>
+	</node>
+	<node id="fingers" type="FingerDetector" name="Finger Detector">
+		<property name="enabled">true</property>
+		<property name="minFingerSize">1</property>
+		<property name="maxFingerSize">37</property>
+		<property name="maxEccentricity">0.9</property>
+		<connection name="source">threshold</connection>
+	</node>
+	<node id="trackedFingers" type="ObjectTracker" name="Finger Tracker">
+		<property name="enabled">true</property>
+		<property name="jitterThreshold">0</property>
+		<property name="maxMatchingDistance">195.108</property>
+		<property name="idGenerator">globalIdGenerator</property>
+		<connection name="source">fingers</connection>
+	</node>
+	<node id="calibratedFingers" type="ObjectTransformation" name="Finger Calibration">
+		<property name="enabled">true</property>
+		<connection name="source">trackedFingers</connection>
+		<connection name="transformer">transformer</connection>
+	</node>
+	<node id="tuio" type="TUIOSender" name="TUIO">
+		<property name="enabled">true</property>
+		<property name="oscAddress">/tuio/2dcur</property>
+		<property name="host">127.0.0.1</property>
+		<property name="port">3333</property>
+		<property name="idleRate">10</property>
+		<connection name="source">calibratedFingers</connection>
+	</node>
+	<node id="globalIdGenerator" type="IdGenerator" name="ID Generator" />
+	<node id="transformer" type="GridTransformer" name="Grid Transformer">
+        <property name="rows">4</property>
+        <property name="columns">4</property>
+        <property name="inputBounds">[(0,0)(640,480)]</property>
+        <property name="inputPoints">(0,0)(160,0)(320,0)(480,0)(640,0)(0,120)(160,120)(320,120)(480,120)(640,120)(0,240)(160,240)(320,240)(480,240)(640,240)(0,360)(160,360)(320,360)(480,360)(640,360)(0,480)(160,480)(320,480)(480,480)(640,480)</property>
+        <property name="outputBounds">[(0,0)(640,480)]</property>
+        <property name="outputPoints">(0,0)(160,0)(320,0)(480,0)(640,0)(0,120)(160,120)(320,120)(480,120)(640,120)(0,240)(160,240)(320,240)(480,240)(640,240)(0,360)(160,360)(320,360)(480,360)(640,360)(0,480)(160,480)(320,480)(480,480)(640,480)</property>
+        <connection name="source">trackedFingers</connection>
+    </node>
+</processing-graph>

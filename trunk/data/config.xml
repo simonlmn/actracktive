@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<config>
+	<headless>false</headless>
+	<logging-config>log4cplus.properties</logging-config>
+	<graph-config>processing-graph.xml</graph-config>
+	<timer-output>5</timer-output>
+</config>

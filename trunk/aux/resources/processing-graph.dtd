@@ -1,0 +1,29 @@
+<!--
+	DTD for description of processing graphs for the processing tool "Actracktive"
+-->
+
+<!ENTITY % node-attributes "
+	id ID #IMPLIED
+	type CDATA #REQUIRED
+	name CDATA #IMPLIED
+">
+
+<!ELEMENT processing-graph (node)*>
+
+<!ELEMENT node (property?,connection?,blob?)*>
+<!ATTLIST node %node-attributes;>
+
+<!ELEMENT property (#PCDATA)>
+<!ATTLIST property
+	name CDATA #REQUIRED
+>
+
+<!ELEMENT connection (#PCDATA)>
+<!ATTLIST connection
+	name CDATA #REQUIRED
+>
+
+<!ELEMENT blob (#PCDATA)>
+<!ATTLIST blob
+	name CDATA #REQUIRED
+>

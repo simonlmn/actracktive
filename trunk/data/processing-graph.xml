@@ -1,0 +1,143 @@
+<?xml version="1.0" ?>
+<!DOCTYPE processing-graph SYSTEM "http://actracktive.googlecode.com/svn/trunk/aux/resources/processing-graph.dtd">
+<processing-graph>
+	<node id="camera" type="DC1394Source" name="DC1394 Camera">
+        <property name="cameraId">49712223530884286:0</property>
+        <property name="mode">MODE_640x480_MONO8</property>
+        <property name="rate">RATE_60</property>
+        <property name="discardFrames">true</property>
+        <property name="brightness">0</property>
+        <property name="exposure">62</property>
+        <property name="gamma">0</property>
+        <property name="shutter">335</property>
+        <property name="gain">30</property>
+    </node>
+    <node id="undistort" type="UndistortRectifyFilter" name="Undistort-Rectify">
+        <property name="enabled">true</property>
+        <property name="scalingFactor">1</property>
+        <property name="horizontalShift">0</property>
+        <property name="verticalShift">182</property>
+        <connection name="source">camera</connection>
+        <property name="intrinsicMatrix">693.145 0 322.033 0 694.322 223.803 0 0 1 </property>
+        <property name="distortionCoefficients">-0.104333 -1.71736 -0.00029186 -0.000630426 5.46851 0.12581 -1.99875 5.85008 </property>
+        <property name="rotationVector">0.138146 0.0133489 -0.0319679 </property>
+        <property name="translationVector">0.524925 0.489861 -1.61375 </property>
+    </node>
+    <node id="roi" type="ImageMaskFilter" name="Image Mask">
+        <property name="enabled">true</property>
+        <property name="left">91</property>
+        <property name="top">98</property>
+        <property name="right">102</property>
+        <property name="bottom">106</property>
+        <connection name="source">undistort</connection>
+    </node>
+    <node id="shading" type="ShadingCorrectionFilter" name="Shading Correction">
+        <property name="enabled">true</property>
+        <property name="learn">false</property>
+        <property name="smooth">1</property>
+        <property name="outputShading">false</property>
+        <connection name="source">roi</connection>
+        <property name="width">447</property>
+        <property name="height">276</property>
+        <property name="type">0</property>
+    </node>
+    <node id="fiducialSmooth" type="SmoothFilter" name="Fiducial Smooth">
+        <property name="enabled">true</property>
+        <property name="strength">5</property>
+        <property name="method">Normalized_Box</property>
+        <connection name="source">shading</connection>
+    </node>
+    <node id="fiducialThreshold" type="AdaptiveThresholdFilter" name="Fiducial Threshold">
+        <property name="enabled">true</property>
+        <property name="blockSize">21</property>
+        <property name="offset">4</property>
+        <property name="invert">false</property>
+        <property name="gauss">true</property>
+        <connection name="source">fiducialSmooth</connection>
+    </node>
+    <node id="fiducials" type="FiducialDetector" name="Fiducial Detector">
+        <property name="enabled">true</property>
+        <property name="trees">trees/small.trees</property>
+        <connection name="source">fiducialThreshold</connection>
+    </node>
+    <node id="trackedFiducials" type="ObjectTracker" name="Fiducial Tracker">
+        <property name="enabled">true</property>
+        <property name="maxMatchingDistance">100</property>
+        <property name="framesToLive">20</property>
+        <connection name="source">fiducials</connection>
+        <connection name="idGenerator">globalIdGenerator</connection>
+    </node>
+    <node id="calibratedFiducials" type="ObjectTransformation" name="Fiducial Transformation">
+        <property name="enabled">true</property>
+        <connection name="source">trackedFiducials</connection>
+        <connection name="transformer">transformer</connection>
+    </node>
+    <node id="fiducialTuio" type="TUIOSender" name="TUIO 2dobj Sender">
+        <property name="enabled">true</property>
+        <property name="oscAddress">/tuio/2Dobj</property>
+        <property name="host">127.0.0.1</property>
+        <property name="port">3333</property>
+        <property name="idleRate">10</property>
+        <connection name="source">calibratedFiducials</connection>
+    </node>
+    <node id="eraseFiducials" type="EraseObjectsFilter" name="Erase Fiducials">
+        <property name="enabled">true</property>
+        <property name="fillColor">0</property>
+        <connection name="source">shading</connection>
+        <connection name="objectSource">trackedFiducials</connection>
+    </node>
+    <node id="fingerSmooth" type="SmoothFilter" name="Finger Smooth">
+        <property name="enabled">true</property>
+        <property name="strength">5</property>
+        <property name="method">Normalized_Box</property>
+        <connection name="source">eraseFiducials</connection>
+    </node>
+    <node id="fingerThreshold" type="AdaptiveThresholdFilter" name="Finger Threshold">
+        <property name="enabled">true</property>
+        <property name="blockSize">41</property>
+        <property name="offset">-17</property>
+        <property name="invert">false</property>
+        <property name="gauss">false</property>
+        <connection name="source">fingerSmooth</connection>
+    </node>
+    <node id="fingers" type="FingerDetector" name="Finger Detector">
+        <property name="enabled">true</property>
+        <property name="minFingerSize">35</property>
+        <property name="maxFingerSize">49</property>
+        <property name="maxEccentricity">0.79054100000000005</property>
+        <property name="onlyConvex">false</property>
+        <connection name="source">fingerThreshold</connection>
+    </node>
+    <node id="trackedFingers" type="ObjectTracker" name="Finger Tracker">
+        <property name="enabled">true</property>
+        <property name="maxMatchingDistance">100</property>
+        <property name="framesToLive">0</property>
+        <connection name="source">fingers</connection>
+        <connection name="idGenerator">globalIdGenerator</connection>
+    </node>
+    <node id="calibratedFingers" type="ObjectTransformation" name="Finger Transformation">
+        <property name="enabled">true</property>
+        <connection name="source">trackedFingers</connection>
+        <connection name="transformer">transformer</connection>
+    </node>
+    <node id="fingerTuio" type="TUIOSender" name="TUIO 2dcur Sender">
+        <property name="enabled">true</property>
+        <property name="oscAddress">/tuio/2Dcur</property>
+        <property name="host">127.0.0.1</property>
+        <property name="port">3333</property>
+        <property name="idleRate">10</property>
+        <connection name="source">calibratedFingers</connection>
+    </node>
+    <node id="globalIdGenerator" type="IdGenerator" name="Id Generator" />
+    <node id="transformer" type="GridTransformer" name="Grid Transformer">
+        <property name="enabled">true</property>
+        <property name="normalize">false</property>
+        <connection name="source">trackedFingers</connection>
+        <property name="rows">4</property>
+        <property name="columns">4</property>
+        <property name="inputBounds">[(0,0),(640,480)]</property>
+        <property name="inputPoints">(0,0)(160,0)(320,0)(480,0)(640,0)(0,120)(160,120)(320,120)(480,120)(640,120)(0,240)(160,240)(320,240)(480,240)(640,240)(0,360)(160,360)(320,360)(480,360)(640,360)(0,480)(160,480)(320,480)(480,480)(640,480)</property>
+        <property name="outputBounds">[(0,0),(640,480)]</property>
+        <property name="outputPoints">(0,0)(160,0)(320,0)(480,0)(640,0)(0,120)(160,120)(320,120)(480,120)(640,120)(0,240)(160,240)(320,240)(480,240)(640,240)(0,360)(160,360)(320,360)(480,360)(640,360)(0,480)(160,480)(320,480)(480,480)(640,480)</property>
+    </node>
+</processing-graph>
