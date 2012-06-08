@@ -79,4 +79,6 @@ Select the appropriate build configuration, depending on the platform:
  * OSX Release
 
 Start building by choosing "Build Project" from the "Project" menu. The runnable
-binary/application bundle will be placed in the `bin` directory.
+binary/application bundle will be placed in the `bin` directory. Additionally,
+a distributable package following the naming scheme
+`projectname-version-platform.[zip|tar.gz]` is created in the `dist` directory.

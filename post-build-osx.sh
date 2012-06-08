@@ -47,3 +47,38 @@ echo "Copying built artifact to binary output path..."
 	chmod -R og-w "$BUNDLE_PATH"
 	
 )
+
+echo "Making distributable package..."
+(
+	DIST_OUTPUT_PATH=dist
+
+	cd "$PROJECT_ROOT";
+	
+	VERSION_INFO=`./version.sh ./src`
+	REVISION=`echo "$VERSION_INFO" | cut -f1`
+	VERSION=`echo "$VERSION_INFO" | cut -f2`
+	DATE=`echo "$VERSION_INFO" | cut -f3`
+	NAME="$PROJECT_NAME"
+
+	DIST_NAME="$NAME"-"$VERSION"-osx
+	
+	DIST_DIR="$DIST_OUTPUT_PATH"/"$DIST_NAME"
+	
+	if [ -e "$DIST_DIR" ]; then
+		rm -rf "$DIST_DIR"
+	fi
+	
+	mkdir -p "$DIST_DIR"
+	
+	cp -r -f "$BINARY_OUTPUT_PATH"/"$BUILD_ARTIFACT".app "$DIST_DIR"
+	cp -f "README.txt" "$DIST_DIR"
+	cp -f "BUILDING.txt" "$DIST_DIR"
+	cp -f "CHANGELOG.txt" "$DIST_DIR"
+	cp -f "LICENSE.txt" "$DIST_DIR"
+	
+	cd "$DIST_OUTPUT_PATH"
+	
+	zip -r "$DIST_NAME".zip "$DIST_NAME"
+	
+	rm -rf "$DIST_NAME"
+)
