@@ -51,6 +51,10 @@ The key features are:
 Using Actracktive
 --------------------------------------------------------------------------------
 
+*Note: If you use one of the pre-compiled binaries from the project's website,
+you might still have to install some additional libraries which are not included
+with Actracktive. Please see BUILDING.txt for further information.*
+
 Actracktive is designed to be used as a process running in the background, doing
 some processing task until it is stopped. However, to tweak some parameters on
 the fly, it also offers an interactive GUI that shows what is currently
