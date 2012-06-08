@@ -129,8 +129,8 @@ useless otherwise. All configuration files, log files or any additional files
 needed for processing are searched and stored in the *data directory*. This is
 by default looked for (and created if not found) in the user's home directory,
 i.e. `~/Actracktive Data`. Some example files that would go in this directory
-can be found in the `data` directory of the project (see 'Project Source File
-Organization' below). 
+can be found in the `data` directory of the project's sources (see 'Project
+Structure' below). 
 
 There are generally three possible configuration files:
 
@@ -253,7 +253,7 @@ The build process is using the Eclipse CDT's internal builder. For detailed
 build instructions, see `BUILDING.txt`.
 
 
-Project Source File Organization
+Project Structure
 --------------------------------------------------------------------------------
 
 The projects files are organized as follows:
@@ -284,7 +284,7 @@ will be placed inside the __`bin`__ directory, which is created automatically.
 License
 --------------------------------------------------------------------------------
 
-Copyright (C) 2012 Simon Lehmann <simon.lehmann@gmx.de>
+Copyright (C) 2012 Simon Lehmann <simon.lmn@gmail.com>
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
