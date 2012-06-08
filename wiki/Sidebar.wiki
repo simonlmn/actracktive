@@ -1,8 +1,7 @@
-
   * Using Actracktive
     * [UserGuide User Guide]
   * Developing Actracktive
-  	* [ProjectStructure Project Structure]
+    * [ProjectStructure Project Structure]
     * [Building Building]
     * [Roadmap Roadmap]
     * [ThirdPartyComponents Third Party Components]
