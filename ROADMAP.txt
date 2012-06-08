@@ -14,5 +14,6 @@ Version 1.0
 Undecided
 --------------------------------------------------------------------------------
 
+ * Allow adding, removing and connecting nodes in the GUI
  * Windows-Port
  * Interactive command line interface
