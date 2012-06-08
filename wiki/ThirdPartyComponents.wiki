@@ -1,0 +1,10 @@
+
+= Third Party Components =
+
+Actracktive incorporates the following statically linked libraries:
+
+  * [http://www.grinninglizard.com/tinyxml/ tinyxml] by Lee Thomason 
+  * [http://code.google.com/p/oscpack/ oscpack] by Ross Bencina
+  * [http://reactivision.sourceforge.net/ fidtrack] by Ross Bencina and Martin Kaltenbrunner
+
+The libraries are included as pre-compiled static libraries together with the public interface header files required for compiling against those.
