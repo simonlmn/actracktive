@@ -3,6 +3,8 @@
 
 <wiki:toc max_depth="2" />
 
+_*Note:* If you use one of the pre-compiled binaries from the project's website, you might still have to install some additional libraries which are not included with Actracktive. Please read the [Building build instructions] for further information._
+
 Actracktive is designed to be used as a process running in the background, doing some processing task until it is stopped. However, to tweak some parameters on the fly, it also offers an interactive GUI that shows what is currently happening in the application and allows for adjustment of various parameters and settings.
 
 When starting the application without any command line parameters and/or configuration file, it will by default start up in interactive GUI mode. It will try to load the configured processing graph config file (named `processing-graph.xml` by default) from the application's _data directory_. If a processing graph could be successfully loaded, it will immediately start processing.
