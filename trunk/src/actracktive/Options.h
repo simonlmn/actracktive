@@ -71,6 +71,7 @@ private:
 	bool readHelpOption();
 	bool readConfigOption();
 	void readAllOptions();
+	void readGraphConfigFileArgument();
 	std::string buildShortOptionString(const struct option longOptions[]);
 	void addError(std::string message);
 
