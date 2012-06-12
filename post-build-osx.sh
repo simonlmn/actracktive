@@ -24,25 +24,48 @@
 # Post-build script for Mac OSX builds
 #
 
+BUNDLE_PATH="$BINARY_OUTPUT_PATH"/"$BUILD_ARTIFACT".app
+BUNDLE_BINARY="$BUNDLE_PATH"/Contents/MacOS/"$BUILD_ARTIFACT"
+BUNDLE_LIBRARIES_PATH="$BUNDLE_PATH"/Contents/Libraries
+BUNDLE_RESOURCES_PATH="$BUNDLE_PATH"/Contents/Resources
+
+repackageDylibs() {
+	BINARY="$1"
+	
+	echo "repackageDylibs for $BINARY"
+	
+	for LIBRARY_INSTALL_NAME in `otool -L "$BINARY" | tail +2 | grep -v -E -e '(/usr)|(/System)' | cut -d '(' -f 1`; do
+		LIBRARY_NAME=`basename "$LIBRARY_INSTALL_NAME"`
+		
+		if [ ! -e "$BUNDLE_LIBRARIES_PATH"/"$LIBRARY_NAME" ]; then
+			cp -f "$MACPORTS_LIB_PATH"/"$LIBRARY_NAME" "$BUNDLE_LIBRARIES_PATH"/"$LIBRARY_NAME"
+			
+			# install_name_tool -id "@rpath/$LIBRARY_NAME" "$BUNDLE_PATH"/Contents/Libraries/"$LIBRARY_NAME"
+			install_name_tool -change "$LIBRARY_INSTALL_NAME" "@rpath/$LIBRARY_NAME" "$BINARY"
+			
+			repackageDylibs "$BUNDLE_LIBRARIES_PATH"/"$LIBRARY_NAME"
+		fi
+	done
+}
+
 echo "Copying built artifact to binary output path..."
 (
-	BUNDLE_PATH="$BINARY_OUTPUT_PATH"/"$BUILD_ARTIFACT".app
-	
 	if [ -e "$BUNDLE_PATH" ]; then
-		rm -rf "$BUNDLE_PATH";
+		rm -rf "$BUNDLE_PATH"
 	fi
 	
 	mkdir -p "$BUNDLE_PATH"
 	mkdir -p "$BUNDLE_PATH"/Contents
 	mkdir -p "$BUNDLE_PATH"/Contents/MacOS
-	mkdir -p "$BUNDLE_PATH"/Contents/Resources
+	mkdir -p "$BUNDLE_LIBRARIES_PATH"
+	mkdir -p "$BUNDLE_RESOURCES_PATH"
 	
-	cp -f "$CWD"/"$BUILD_ARTIFACT" "$BUNDLE_PATH"/Contents/MacOS/"$BUILD_ARTIFACT"
+	cp -f "$CWD"/"$BUILD_ARTIFACT" "$BUNDLE_BINARY"
 	cp -f "$PROJECT_ROOT"/aux/Info.plist "$BUNDLE_PATH"/Contents/Info.plist
-	
-	rsync -r --exclude=.svn "$PROJECT_ROOT"/aux/resources/ "$BUNDLE_PATH"/Contents/Resources
-	  
+	rsync -r --exclude=.svn "$PROJECT_ROOT"/aux/resources/ "$BUNDLE_RESOURCES_PATH"
 	echo -n "APPL????" > "$BUNDLE_PATH"/Contents/PkgInfo
+	
+	repackageDylibs "$BUNDLE_BINARY"
 	
 	chmod -R og-w "$BUNDLE_PATH"
 	
@@ -70,7 +93,7 @@ echo "Making distributable package..."
 	
 	mkdir -p "$DIST_DIR"
 	
-	cp -r -f "$BINARY_OUTPUT_PATH"/"$BUILD_ARTIFACT".app "$DIST_DIR"
+	cp -r -f "$BUNDLE_PATH" "$DIST_DIR"
 	cp -f "README.txt" "$DIST_DIR"
 	cp -f "BUILDING.txt" "$DIST_DIR"
 	cp -f "CHANGELOG.txt" "$DIST_DIR"
