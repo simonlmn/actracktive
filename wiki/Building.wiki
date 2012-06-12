@@ -7,7 +7,7 @@
 
 Actracktive has been built/tested on the following systems:
 
-  * Mac OSX 10.6.8, Apple GCC 4.2.1
+  * Mac OS X 10.6.8, Apple GCC 4.2.1
   * Ubuntu 12.04, GNU GCC 4.6.1
 
 It depends on several libraries, which are required at build time and usually at runtime as well, if no explicit static linking is done. All build configurations require the following libraries:
@@ -17,10 +17,10 @@ It depends on several libraries, which are required at build time and usually at
   * freetype (>= 2.4.4)
   * log4cplus (>= 1.0.3)
   * opencv (>= 2.3.0)
-    * tbb 4.0, dependency of opencv
-    * z 1.2.6, dependency of opencv
+  
+These libraries are usually not installed by default on any Mac OS X system and partially on most Linux systems. For information on how to get and install the required libraries, see 'Installing Required Libraries' below.
 
-Compiling on OSX additionally requires:
+Compiling on Mac OS X additionally requires:
 
   * CoreFoundation.framework
   * OpenGL.framework
@@ -33,30 +33,15 @@ Compiling on Linux additionally requires:
   * GLU
   * freeglut (>= 2.6.0)
 
-= Build Setup =
+= Installing Required Libraries =
 
-== OSX ==
+== Mac OS X ==
 
 Install the required libraries using !MacPorts:
 
 {{{
-$ sudo port install boost libdc1394 freetype log4cplus opencv tbb zlib
+$ sudo port install boost libdc1394 freetype log4cplus opencv
 }}}
-
-Change the launchd configuration, so that it will find the libraries installed via !MacPorts. Open the file `/etc/launchd.conf` and add the following line:
-
-{{{
-setenv DYLD_FALLBACK_LIBRARY_PATH $DYLD_FALLBACK_LIBRARY_PATH:/opt/local/lib
-}}}
-
-For command line support, also add the following to the file /etc/profile:
-
-{{{
-export DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH:/opt/local/lib
-}}}
-
-A system restart (or at least logout/login) is required for the new settings to
-become effective.
 
 == Linux ==
 
@@ -65,7 +50,7 @@ Ubuntu 12.04:
 
 {{{
 $ apt-get install libboost-dev libdc1394-22-dev libfreetype6-dev \
-  liblog4cplus-dev libopencv-dev libtbb-dev zlib1g-dev
+  liblog4cplus-dev libopencv-dev
 }}}
 
 = Building using Eclipse CDT =
@@ -77,5 +62,6 @@ Select the appropriate build configuration, depending on the platform:
   * OSX Debug
   * OSX Release
 
-Start building by choosing "Build Project" from the "Project" menu. The runnable
-binary/application bundle will be placed in the `bin directory.
+Start building by choosing "Build Project" from the "Project" menu. The runnable binary/application bundle will be placed in the `bin directory.
+
+_Note: On Mac OS X, All dynamically loaded libraries and all their dependencies are automatically repackaged into the application bundle to make it fully self-contained._

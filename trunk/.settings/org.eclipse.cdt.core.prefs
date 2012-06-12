@@ -1,3 +1,4 @@
+#Tue Jun 12 15:44:08 CEST 2012
 eclipse.preferences.version=1
 environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664=
 environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664.1963697087.242391556/BINARY_OUTPUT_PATH/delimiter=\:
@@ -40,6 +41,9 @@ environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664/BINARY
 environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664/BUILD_ARTIFACT/delimiter=\:
 environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664/BUILD_ARTIFACT/operation=replace
 environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664/BUILD_ARTIFACT/value=${BuildArtifactFileName}
+environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664/MACPORTS_LIB_PATH/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664/MACPORTS_LIB_PATH/operation=replace
+environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664/MACPORTS_LIB_PATH/value=${MacPortsLibraryPath}
 environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664/PROJECT_NAME/delimiter=\:
 environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664/PROJECT_NAME/operation=replace
 environment/project/cdt.managedbuild.config.gnu.macosx.exe.debug.13767664/PROJECT_NAME/value=${ProjName}
@@ -69,6 +73,9 @@ environment/project/cdt.managedbuild.config.macosx.exe.release.2048912183/BINARY
 environment/project/cdt.managedbuild.config.macosx.exe.release.2048912183/BUILD_ARTIFACT/delimiter=\:
 environment/project/cdt.managedbuild.config.macosx.exe.release.2048912183/BUILD_ARTIFACT/operation=replace
 environment/project/cdt.managedbuild.config.macosx.exe.release.2048912183/BUILD_ARTIFACT/value=${BuildArtifactFileName}
+environment/project/cdt.managedbuild.config.macosx.exe.release.2048912183/MACPORTS_LIB_PATH/delimiter=\:
+environment/project/cdt.managedbuild.config.macosx.exe.release.2048912183/MACPORTS_LIB_PATH/operation=replace
+environment/project/cdt.managedbuild.config.macosx.exe.release.2048912183/MACPORTS_LIB_PATH/value=${MacPortsLibraryPath}
 environment/project/cdt.managedbuild.config.macosx.exe.release.2048912183/PROJECT_NAME/delimiter=\:
 environment/project/cdt.managedbuild.config.macosx.exe.release.2048912183/PROJECT_NAME/operation=replace
 environment/project/cdt.managedbuild.config.macosx.exe.release.2048912183/PROJECT_NAME/value=${ProjName}

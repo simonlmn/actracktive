@@ -5,6 +5,9 @@
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.macosx.exe.debug.13767664">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.macosx.exe.debug.13767664" moduleId="org.eclipse.cdt.core.settings" name="OSX Debug">
+				<macros>
+					<stringMacro name="MacPortsLibraryPath" type="VALUE_PATH_DIR" value="/opt/local/lib"/>
+				</macros>
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.MachO64" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -24,7 +27,7 @@
 							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.macosx.cpp.linker.macosx.exe.debug.1429763910" name="MacOS X C++ Linker" superClass="cdt.managedbuild.tool.macosx.cpp.linker.macosx.exe.debug">
 								<option id="macosx.cpp.link.option.paths.1658509128" name="Library search path (-L)" superClass="macosx.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Actracktive/libs/osx}&quot;"/>
-									<listOptionValue builtIn="false" value="/opt/local/lib"/>
+									<listOptionValue builtIn="false" value="&quot;${MacPortsLibraryPath}&quot;"/>
 								</option>
 								<option id="macosx.cpp.link.option.libs.714003467" name="Libraries (-l)" superClass="macosx.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="boost_system"/>
@@ -33,8 +36,6 @@
 									<listOptionValue builtIn="false" value="boost_filesystem"/>
 									<listOptionValue builtIn="false" value="log4cplus"/>
 									<listOptionValue builtIn="false" value="dc1394"/>
-									<listOptionValue builtIn="false" value="tbb"/>
-									<listOptionValue builtIn="false" value="z"/>
 									<listOptionValue builtIn="false" value="opencv_core"/>
 									<listOptionValue builtIn="false" value="opencv_imgproc"/>
 									<listOptionValue builtIn="false" value="opencv_highgui"/>
@@ -47,12 +48,16 @@
 									<listOptionValue builtIn="false" value="opencv_legacy"/>
 									<listOptionValue builtIn="false" value="opencv_flann"/>
 									<listOptionValue builtIn="false" value="opencv_gpu"/>
-									<listOptionValue builtIn="false" value="oscpack"/>
 									<listOptionValue builtIn="false" value="freetype"/>
+									<listOptionValue builtIn="false" value="oscpack"/>
 									<listOptionValue builtIn="false" value="tinyxml"/>
 									<listOptionValue builtIn="false" value="fidtrack"/>
 								</option>
-								<option id="macosx.cpp.link.option.flags.1777885381" name="Linker flags" superClass="macosx.cpp.link.option.flags" value="-arch x86_64 -pthread -framework CoreFoundation -framework OpenGL -framework GLUT -framework QTKit" valueType="string"/>
+								<option id="macosx.cpp.link.option.flags.1777885381" name="Linker flags" superClass="macosx.cpp.link.option.flags" value="-arch x86_64 -pthread -headerpad_max_install_names -framework CoreFoundation -framework OpenGL -framework GLUT -framework QTKit" valueType="string"/>
+								<option id="macosx.cpp.link.option.other.93962279" name="Other options (-Xlinker [option])" superClass="macosx.cpp.link.option.other" valueType="stringList">
+									<listOptionValue builtIn="false" value="-rpath"/>
+									<listOptionValue builtIn="false" value="'@loader_path/../Libraries'"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.macosx.cpp.linker.input.954509117" superClass="cdt.managedbuild.tool.macosx.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -107,6 +112,9 @@
 		</cconfiguration>
 		<cconfiguration id="cdt.managedbuild.config.macosx.exe.release.2048912183">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.macosx.exe.release.2048912183" moduleId="org.eclipse.cdt.core.settings" name="OSX Release">
+				<macros>
+					<stringMacro name="MacPortsLibraryPath" type="VALUE_PATH_DIR" value="/opt/local/lib"/>
+				</macros>
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.MachO64" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -126,7 +134,7 @@
 							<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.macosx.cpp.linker.macosx.exe.release.1648572925" name="MacOS X C++ Linker" superClass="cdt.managedbuild.tool.macosx.cpp.linker.macosx.exe.release">
 								<option id="macosx.cpp.link.option.paths.351787375" name="Library search path (-L)" superClass="macosx.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Actracktive/libs/osx}&quot;"/>
-									<listOptionValue builtIn="false" value="/opt/local/lib"/>
+									<listOptionValue builtIn="false" value="&quot;${MacPortsLibraryPath}&quot;"/>
 								</option>
 								<option id="macosx.cpp.link.option.libs.196704053" name="Libraries (-l)" superClass="macosx.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="boost_system"/>
@@ -135,8 +143,6 @@
 									<listOptionValue builtIn="false" value="boost_filesystem"/>
 									<listOptionValue builtIn="false" value="log4cplus"/>
 									<listOptionValue builtIn="false" value="dc1394"/>
-									<listOptionValue builtIn="false" value="tbb"/>
-									<listOptionValue builtIn="false" value="z"/>
 									<listOptionValue builtIn="false" value="opencv_core"/>
 									<listOptionValue builtIn="false" value="opencv_imgproc"/>
 									<listOptionValue builtIn="false" value="opencv_highgui"/>
@@ -149,12 +155,16 @@
 									<listOptionValue builtIn="false" value="opencv_legacy"/>
 									<listOptionValue builtIn="false" value="opencv_flann"/>
 									<listOptionValue builtIn="false" value="opencv_gpu"/>
-									<listOptionValue builtIn="false" value="oscpack"/>
 									<listOptionValue builtIn="false" value="freetype"/>
+									<listOptionValue builtIn="false" value="oscpack"/>
 									<listOptionValue builtIn="false" value="tinyxml"/>
 									<listOptionValue builtIn="false" value="fidtrack"/>
 								</option>
-								<option id="macosx.cpp.link.option.flags.119108254" name="Linker flags" superClass="macosx.cpp.link.option.flags" value="-arch x86_64 -pthread -framework CoreFoundation -framework OpenGL -framework GLUT -framework QTKit" valueType="string"/>
+								<option id="macosx.cpp.link.option.flags.119108254" name="Linker flags" superClass="macosx.cpp.link.option.flags" value="-arch x86_64 -pthread -headerpad_max_install_names -framework CoreFoundation -framework OpenGL -framework GLUT -framework QTKit" valueType="string"/>
+								<option id="macosx.cpp.link.option.other.1300169255" name="Other options (-Xlinker [option])" superClass="macosx.cpp.link.option.other" valueType="stringList">
+									<listOptionValue builtIn="false" value="-rpath"/>
+									<listOptionValue builtIn="false" value="'@loader_path/../Libraries'"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.macosx.cpp.linker.input.2034281938" superClass="cdt.managedbuild.tool.macosx.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -265,8 +275,6 @@
 									<listOptionValue builtIn="false" value="boost_filesystem"/>
 									<listOptionValue builtIn="false" value="log4cplus"/>
 									<listOptionValue builtIn="false" value="dc1394"/>
-									<listOptionValue builtIn="false" value="tbb"/>
-									<listOptionValue builtIn="false" value="z"/>
 									<listOptionValue builtIn="false" value="opencv_core"/>
 									<listOptionValue builtIn="false" value="opencv_imgproc"/>
 									<listOptionValue builtIn="false" value="opencv_highgui"/>
@@ -279,8 +287,8 @@
 									<listOptionValue builtIn="false" value="opencv_legacy"/>
 									<listOptionValue builtIn="false" value="opencv_flann"/>
 									<listOptionValue builtIn="false" value="opencv_gpu"/>
-									<listOptionValue builtIn="false" value="oscpack"/>
 									<listOptionValue builtIn="false" value="freetype"/>
+									<listOptionValue builtIn="false" value="oscpack"/>
 									<listOptionValue builtIn="false" value="tinyxml"/>
 									<listOptionValue builtIn="false" value="fidtrack"/>
 								</option>
@@ -365,8 +373,6 @@
 									<listOptionValue builtIn="false" value="boost_filesystem"/>
 									<listOptionValue builtIn="false" value="log4cplus"/>
 									<listOptionValue builtIn="false" value="dc1394"/>
-									<listOptionValue builtIn="false" value="tbb"/>
-									<listOptionValue builtIn="false" value="z"/>
 									<listOptionValue builtIn="false" value="opencv_core"/>
 									<listOptionValue builtIn="false" value="opencv_imgproc"/>
 									<listOptionValue builtIn="false" value="opencv_highgui"/>
@@ -379,8 +385,8 @@
 									<listOptionValue builtIn="false" value="opencv_legacy"/>
 									<listOptionValue builtIn="false" value="opencv_flann"/>
 									<listOptionValue builtIn="false" value="opencv_gpu"/>
-									<listOptionValue builtIn="false" value="oscpack"/>
 									<listOptionValue builtIn="false" value="freetype"/>
+									<listOptionValue builtIn="false" value="oscpack"/>
 									<listOptionValue builtIn="false" value="tinyxml"/>
 									<listOptionValue builtIn="false" value="fidtrack"/>
 								</option>
