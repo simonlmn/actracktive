@@ -64,7 +64,21 @@ int main(int argc, char* argv[])
 {
 	setUpBasicLoggingOnce();
 
+#ifdef TARGET_OSX
+	// Filtering out -psn_x_xxxxx argument passed in by launchd
+
+	std::vector<char*> args;
+	for (int i = 0; i < argc; i++) {
+		if (strncmp(argv[i], "-psn", 4) != 0) {
+			args.push_back(argv[i]);
+		}
+	}
+
+	Options opts(args.size(), args.data());
+#else
 	Options opts(argc, argv);
+#endif
+
 	if (opts.hasErrors()) {
 		const std::list<std::string>& messages = opts.getErrorMessages();
 		for (std::list<std::string>::const_iterator message = messages.begin(); message != messages.end(); ++message) {

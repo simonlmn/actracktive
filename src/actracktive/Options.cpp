@@ -60,9 +60,9 @@ void Options::printHelp(std::ostream& os)
 {
 	boost::filesystem::path command(arguments[0]);
 
-	os << "Usage: " << command.filename().string() << " [arguments]" << std::endl;
+	os << "Usage: " << command.filename().string() << " [options] [file]" << std::endl;
 	os << std::endl;
-	os << "Arguments:" << std::endl;
+	os << "Options:" << std::endl;
 	os << std::endl;
 	os << " --help                  Show help message (this message) and exit" << std::endl;
 	os << std::endl;
@@ -87,6 +87,9 @@ void Options::printHelp(std::ostream& os)
 	os << " --timer-output <n>" << std::endl;
 	os << "  -t <n>                 Print performance timer output every <n> seconds; n = 0" << std::endl;
 	os << "                         disables output (only used in headless mode)" << std::endl;
+	os << std::endl << std::endl;
+	os << "The optional file argument is an alternative to --graph-config and overrides" << std::endl;
+	os << "any previously specified graph configuration options." << std::endl;
 	os << std::endl;
 }
 
@@ -116,6 +119,8 @@ void Options::parseOptions()
 		}
 
 		readAllOptions();
+
+		readGraphConfigFileArgument();
 
 		loggingConfig = filesystem::coalesceFiles(loggingConfig, filesystem::toResource(LOGGING_CONFIG_DEFAULT));
 	}
@@ -194,6 +199,16 @@ void Options::readAllOptions()
 				message << "Unknown option '" << char(opt) << "'";
 				addError(message.str());
 				break;
+		}
+	}
+}
+
+void Options::readGraphConfigFileArgument()
+{
+	if (numberOfArguments > 1) {
+		char* lastArgument = arguments[numberOfArguments - 1];
+		if (strncmp(lastArgument, "-", 1) != 0) {
+			graphConfig = boost::filesystem::path(boost::lexical_cast<std::string>(lastArgument));
 		}
 	}
 }
