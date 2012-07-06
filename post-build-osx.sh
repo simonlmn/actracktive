@@ -30,21 +30,20 @@ BUNDLE_LIBRARIES_PATH="$BUNDLE_PATH"/Contents/Libraries
 BUNDLE_RESOURCES_PATH="$BUNDLE_PATH"/Contents/Resources
 
 repackageDylibs() {
-	BINARY="$1"
+	echo "repackageDylibs for $1"
 	
-	echo "repackageDylibs for $BINARY"
-	
-	for LIBRARY_INSTALL_NAME in `otool -L "$BINARY" | tail +2 | grep -v -E -e '(/usr)|(/System)' | cut -d '(' -f 1`; do
-		LIBRARY_NAME=`basename "$LIBRARY_INSTALL_NAME"`
+	local LIBRARY_INSTALL_NAME=
+	for LIBRARY_INSTALL_NAME in `otool -L "$1" | tail +2 | grep -v -E -e '(/usr)|(/System)|(@rpath)' | cut -d '(' -f 1 | sed 's/^[[:space:]]*\(.*\)[[:space:]]*$/\1/'`; do
+		local LIBRARY_NAME=`basename "$LIBRARY_INSTALL_NAME"`
 		
 		if [ ! -e "$BUNDLE_LIBRARIES_PATH"/"$LIBRARY_NAME" ]; then
 			cp -f "$MACPORTS_LIB_PATH"/"$LIBRARY_NAME" "$BUNDLE_LIBRARIES_PATH"/"$LIBRARY_NAME"
-			
-			# install_name_tool -id "@rpath/$LIBRARY_NAME" "$BUNDLE_PATH"/Contents/Libraries/"$LIBRARY_NAME"
-			install_name_tool -change "$LIBRARY_INSTALL_NAME" "@rpath/$LIBRARY_NAME" "$BINARY"
+			install_name_tool -id "@rpath/$LIBRARY_NAME" "$BUNDLE_LIBRARIES_PATH"/"$LIBRARY_NAME"
 			
 			repackageDylibs "$BUNDLE_LIBRARIES_PATH"/"$LIBRARY_NAME"
 		fi
+		
+		install_name_tool -change "$LIBRARY_INSTALL_NAME" "@rpath/$LIBRARY_NAME" "$1"
 	done
 }
 

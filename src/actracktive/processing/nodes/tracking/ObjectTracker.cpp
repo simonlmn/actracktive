@@ -147,7 +147,7 @@ bool ObjectTracker::matchWithPreviousObject(const Object* object)
 	std::priority_queue<Distance, std::vector<Distance>, std::greater<Distance> > candidateObjects;
 	for (Objects::Iterator previousObject = previousObjects.begin(); previousObject != previousObjects.end(); ++previousObject) {
 		Distance candidate = distance(*object, **previousObject);
-		if (!candidate.isInfinity()) {
+		if (!(candidate.isInfinity() || candidate.distance > (maxMatchingDistance * maxMatchingDistance))) {
 			candidateObjects.push(candidate);
 		}
 	}
