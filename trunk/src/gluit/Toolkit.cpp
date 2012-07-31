@@ -145,8 +145,6 @@ namespace gluit
 
 		mainLoopRunning = true;
 		while (mainLoopRunning) {
-			processOperations();
-
 #ifdef TARGET_OSX
 			glutCheckLoop();
 #elif TARGET_LINUX
@@ -239,6 +237,8 @@ namespace gluit
 		glutDisplayFunc(&noOp);
 		glutHideWindow();
 #endif
+
+		glutIdleFunc(processOperations);
 
 		invokeInEventLoop(boost::bind(&doUpdateScreenSize));
 	}
