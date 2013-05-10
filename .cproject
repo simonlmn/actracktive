@@ -30,10 +30,10 @@
 									<listOptionValue builtIn="false" value="&quot;${MacPortsLibraryPath}&quot;"/>
 								</option>
 								<option id="macosx.cpp.link.option.libs.714003467" name="Libraries (-l)" superClass="macosx.cpp.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="boost_system"/>
-									<listOptionValue builtIn="false" value="boost_date_time"/>
+									<listOptionValue builtIn="false" value="boost_system-mt"/>
+									<listOptionValue builtIn="false" value="boost_date_time-mt"/>
 									<listOptionValue builtIn="false" value="boost_thread-mt"/>
-									<listOptionValue builtIn="false" value="boost_filesystem"/>
+									<listOptionValue builtIn="false" value="boost_filesystem-mt"/>
 									<listOptionValue builtIn="false" value="log4cplus"/>
 									<listOptionValue builtIn="false" value="dc1394"/>
 									<listOptionValue builtIn="false" value="opencv_core"/>
@@ -137,10 +137,10 @@
 									<listOptionValue builtIn="false" value="&quot;${MacPortsLibraryPath}&quot;"/>
 								</option>
 								<option id="macosx.cpp.link.option.libs.196704053" name="Libraries (-l)" superClass="macosx.cpp.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="boost_system"/>
-									<listOptionValue builtIn="false" value="boost_date_time"/>
+									<listOptionValue builtIn="false" value="boost_system-mt"/>
+									<listOptionValue builtIn="false" value="boost_date_time-mt"/>
 									<listOptionValue builtIn="false" value="boost_thread-mt"/>
-									<listOptionValue builtIn="false" value="boost_filesystem"/>
+									<listOptionValue builtIn="false" value="boost_filesystem-mt"/>
 									<listOptionValue builtIn="false" value="log4cplus"/>
 									<listOptionValue builtIn="false" value="dc1394"/>
 									<listOptionValue builtIn="false" value="opencv_core"/>
